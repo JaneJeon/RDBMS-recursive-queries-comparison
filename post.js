@@ -27,7 +27,7 @@ module.exports = db => {
     },
     {
       updatedAt: false,
-      indexes: [{ fields: ['parentId', 'score'] }],
+      indexes: [{ fields: ['score'] }, { fields: ['createdAt'] }],
       hooks: {
         beforeValidate: async post => {
           // fake some data
@@ -52,6 +52,38 @@ module.exports = db => {
       }
     }
   )
+
+  Post.getFullTree = async () =>
+    Post.findAll({
+      hierarchy: true,
+      attributes: { exclude: ['createdAt', 'score'] }
+    })
+
+  Post.getFullTreeByDate = async () =>
+    Post.findAll({
+      hierarchy: true,
+      order: [['createdAt', 'DESC']],
+      attributes: { exclude: ['createdAt', 'score'] }
+    })
+
+  Post.getFullTreeByScore = async () =>
+    Post.findAll({
+      hierarchy: true,
+      order: [['score', 'DESC']],
+      attributes: { exclude: ['createdAt', 'score'] }
+    })
+
+  Post.prototype.getTree = async function() {
+    // TODO:
+  }
+
+  Post.prototype.getTreeByDate = async function() {
+    // TODO:
+  }
+
+  Post.prototype.getTreeByScore = function() {
+    // TODO:
+  }
 
   return Post
 }

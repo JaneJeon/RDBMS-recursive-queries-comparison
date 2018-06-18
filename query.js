@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const ora = require('ora'),
   ms = require('pretty-ms'),
   fs = require('fs'),
@@ -10,32 +8,21 @@ const ora = require('ora'),
   let start = new Date()
 
   for (let i = 0; i < process.env.ITERS; i++)
-    var result1 = await Post.findAll({
-      hierarchy: true,
-      attributes: { exclude: ['createdAt'] }
-    })
+    var result1 = await Post.getFullTree()
 
   const duration1 = ms((new Date() - start) / process.env.ITERS)
   spinner.text = 'fetching full tree by date'
   start = new Date()
 
   for (let i = 0; i < process.env.ITERS; i++)
-    var result2 = await Post.findAll({
-      hierarchy: true,
-      attributes: { exclude: ['createdAt'] },
-      order: [['createdAt', 'DESC']]
-    })
+    var result2 = await Post.getFullTreeByDate()
 
   const duration2 = ms((new Date() - start) / process.env.ITERS)
   spinner.text = 'fetching full tree by score'
   start = new Date()
 
   for (let i = 0; i < process.env.ITERS; i++)
-    var result3 = await Post.findAll({
-      hierarchy: true,
-      attributes: { exclude: ['createdAt'] },
-      order: [['score', 'DESC']]
-    })
+    var result3 = await Post.getFullTreeByScore()
 
   const duration3 = ms((new Date() - start) / process.env.ITERS)
   spinner.text = 'updating scores of the tree'
@@ -50,10 +37,7 @@ const ora = require('ora'),
   start = new Date()
   for (let i = 0; i < process.env.UPDATES; i++) {
     updates.push(
-      (async () =>
-        (await Post.findById(keys[randInt(keys.length)].id)).increment(
-          'score'
-        ))()
+      (async () => await keys[randInt(keys.length)].increment('score'))()
     )
   }
 

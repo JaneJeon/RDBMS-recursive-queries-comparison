@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const ora = require('ora'),
   ms = require('pretty-ms'),
   db = require('./db'),
@@ -15,17 +13,19 @@ const ora = require('ora'),
   }
 
   spinner.text = 'generating top-level posts'
-  const start = new Date()
-  let parents = [await Post.create()],
+  let parents = [],
     next = []
 
-  for (let i = 1; i <= process.env.DEPTH; i++) {
+  const start = new Date()
+  for (let i = 0; i < process.env.BREADTH; i++)
+    parents.push(await Post.create())
+
+  for (let i = 2; i <= process.env.DEPTH; i++) {
     spinner.text = `generating depth ${i} posts`
-    for (let j = 0; j < parents.length; j++)
-      for (let k = 0; k < process.env.BREADTH; k++) {
+    for (parent of parents)
+      for (let j = 0; j < process.env.BREADTH; j++) {
         const child = await Post.create()
-        await child.setParent(parents[j])
-        await child.save()
+        await child.setParent(parent)
         next.push(child)
       }
 

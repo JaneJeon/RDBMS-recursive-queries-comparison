@@ -14,28 +14,34 @@ Although the final product will have far more tree queries (which will be much m
 ## How do I run this?
 First and foremost, you should have both `MySQL` and `Postgres` installed. In addition, if you have `MySQL` 8, you should change your root user's authentication plugin to `mysql_native_password` instead of `sha2_caching_password`, which `mysql2` - the library used by `Sequelize` - doesn't support at the time.
 
+You can do so using the following commands in `mysql`:
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+FLUSH PRIVILEGES;
+```
+
 Then, run `make`. That will generate the fake data for both `MySQL` and `Postgres` and query them the exact same way using our ORM.
 
 ## Results
 Here is the test run output from my laptop:
 ```
-🌺 make
+$ make
 mysql-generate
-✔ 3906 posts created, 15ms per post
+✔ 3905 posts created, 16ms per post
 postgres-generate
-✔ 3906 posts created, 8ms per post
+✔ 3905 posts created, 7ms per post
 mysql-query
-✔ fetching full unordered tree: 46ms
-fetching full tree by date: 46ms
-fetching full tree by score: 46ms
-total rows: 3906, iters: 300
-updating 30000 records: 20s
+✔ fetching full unordered tree: 42ms
+fetching full tree by date: 40ms
+fetching full tree by score: 41ms
+total rows: 3905, iters: 300
+updating 30000 records: 11.7s
 postgres-query
-✔ fetching full unordered tree: 34ms
-fetching full tree by date: 31ms
-fetching full tree by score: 34ms
-total rows: 3906, iters: 300
-updating 30000 records: 16.1s
+✔ fetching full unordered tree: 26ms
+fetching full tree by date: 32ms
+fetching full tree by score: 29ms
+total rows: 3905, iters: 300
+updating 30000 records: 8.9s
 ```
 
 ## Up next

@@ -1,3 +1,4 @@
+require('dotenv').config()
 const Sequelize = require('sequelize-hierarchy')()
 
 module.exports = new Sequelize(
@@ -8,6 +9,7 @@ module.exports = new Sequelize(
     operatorsAliases: false,
     logging: false,
     dialect: process.env.DIALECT,
-    sync: { force: true }
+    sync: { force: true },
+    pool: { max: require('os').cpus().length }
   }
 )
