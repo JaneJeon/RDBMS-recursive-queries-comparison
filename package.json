@@ -17,7 +17,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "dotenv": "^6.0.0",
+    "dotenv": "^8.1.0",
     "ora": "^2.1.0",
     "pretty-ms": "^3.2.0"
   }
