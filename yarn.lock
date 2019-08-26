@@ -98,9 +98,9 @@ denque@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/denque/-/denque-1.2.3.tgz#98c50c8dd8cdfae318cc5859cc8ee3da0f9b0cc2"
 
-dotenv@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
+dotenv@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.1.0.tgz#d811e178652bfb8a1e593c6dd704ec7e90d85ea2"
 
 dottie@^2.0.0:
   version "2.0.0"
